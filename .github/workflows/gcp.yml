@@ -1,4 +1,4 @@
-name: Build and Push Flask App Imge to Google Cloud Platform
+name: Build and Push Flask App Image to Google Cloud Platform
 on:
   push:
     branches: [main]
@@ -10,11 +10,6 @@ jobs:
       IMAGE_NAME: virtual-tryon
       PROJECT_ID: virtual-try-on-420019
 
-    # Add "id-token" with the intended permissions.
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -24,32 +19,31 @@ jobs:
         pwd
         ls -a
 
-    - id: 'auth'
-      name: Configure GCP credentials
-      uses: 'google-github-actions/auth@v2'
+    - name: Configure GCP credentials
+      id: auth
+      uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: 'projects/334629917966/locations/global/workloadIdentityPools/new-pool/providers/virtual-try-on-420019'
-        create_credentials_file: true
         service_account: 'new-service@virtual-try-on-420019.iam.gserviceaccount.com'
+        token_format: "access_token"
         access_token_lifetime: "360s"
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v2'
-  
-    - name: 'Use gcloud CLI'
-      run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
-  
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Use gcloud CLI
+      run: gcloud auth list --filter=status:ACTIVE --format="value(account)"
+
     - name: Build Docker Image
       run: docker build -t $IMAGE_NAME:latest ./vto
 
     - name: Configure Docker Client
-      run: |-
-        gcloud auth configure-docker northamerica-northeast2-docker.pkg.dev --quiet
+      run: gcloud auth configure-docker northamerica-northeast2-docker.pkg.dev --quiet
 
     - name: Push Docker Image to Artifact Registry
       env:
         GIT_TAG: v0.1.0
-      run: |-
+      run: |
         docker tag $IMAGE_NAME:latest northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:latest
         docker tag $IMAGE_NAME:latest northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
         docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:latest
