@@ -28,6 +28,17 @@ jobs:
   
     - name: 'Use gcloud CLI'
       run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
+
+    - name: Re-authenticate with Google Cloud SDK
+      run: |
+        gcloud auth login
+    
+    - name: Set desired service account for authentication
+      run: |
+        gcloud config set account ACCOUNT_EMAIL
+      env:
+        ACCOUNT_EMAIL: vto-github-action-service@virtual-try-on-420112.iam.gserviceaccount.com
+    
   
     - name: Build Docker Image
       run: docker build -t vto-image:latest ./vto
