@@ -24,7 +24,7 @@ jobs:
         pwd
         ls -a
 
-    - id: auth
+    - id: 'auth'
       name: Configure GCP credentials
       uses: 'google-github-actions/auth@v2'
       with:
