@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Install Poetry
-RUN pip install poetry==1.8.2
+RUN pip install poetry==1.1.11
 
 # Install dependencies using Poetry
 RUN poetry install
