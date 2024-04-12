@@ -7,7 +7,7 @@ jobs:
   build-push-gcr:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -30,7 +30,7 @@ jobs:
       run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
   
     - name: Build Docker Image
-      run: docker build -t northamerica-northeast2-docker.pkg.dev/virtual-try-on-420112/vto-artifact/vto-image:latest ./vto
+      run: docker build -t vto-image:latest ./vto
 
     - name: Configure Docker Client
       run: gcloud auth configure-docker northamerica-northeast2-docker.pkg.dev --quiet
