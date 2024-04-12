@@ -1,4 +1,4 @@
-name: Build and Push Flask App Image to Google Cloud Platform
+name: Build and Push Flask App Imge to Google Cloud Platform
 on:
   push:
     branches: [main]
