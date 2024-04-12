@@ -30,7 +30,7 @@ jobs:
       with:
         workload_identity_provider: 'projects/334629917966/locations/global/workloadIdentityPools/new-pool/providers/virtual-try-on-420019'
         create_credentials_file: true
-        service_account: 'github-actions@virtual-try-on-420019.iam.gserviceaccount.com'
+        service_account: 'new-service@virtual-try-on-420019.iam.gserviceaccount.com'
         access_token_lifetime: "360s"
 
     - name: 'Set up Cloud SDK'
