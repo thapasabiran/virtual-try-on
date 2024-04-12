@@ -19,18 +19,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Print Current Directory
-      run: |
-        pwd
-        ls -a
-
     - name: Configure GCP credentials
       id: auth
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: 'projects/177200455350/locations/global/workloadIdentityPools/vto-pool/providers/vto-github'
         service_account: 'vto-github-action-service@virtual-try-on-420112.iam.gserviceaccount.com'
-        access_token_lifetime: "360s"
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
@@ -39,17 +33,21 @@ jobs:
       run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
   
     - name: Build Docker Image
-      run: docker build -t $IMAGE_NAME:latest ./vto
+      run: docker build -t $IMAGE_NAME:1.0 ./vto
 
     - name: Configure Docker Client
       run: |-
-        gcloud auth configure-docker northamerica-northeast2-docker.pkg.dev --quiet
+        gcloud auth configure-docker northamerica-northeast2-docker.pkg.dev
 
     - name: Push Docker Image to Artifact Registry
       env:
         GIT_TAG: v0.1.0
       run: |-
-        docker tag $IMAGE_NAME:latest northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:latest
-        docker tag $IMAGE_NAME:latest northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
-        docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:latest
-        docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
+        docker tag $IMAGE_NAME:1.0 northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:tag1
+        docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:tag1
+
+    # docker pull us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
+    # docker tag us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0 us-central1-docker.pkg.dev/virtual-try-on-420112/quickstart-docker-repo/quickstart-image:tag1
+    # docker push us-central1-docker.pkg.dev/virtual-try-on-420112/quickstart-docker-repo/quickstart-image:tag1
+
+    # docker pull us-central1-docker.pkg.dev/virtual-try-on-420112/quickstart-docker-repo/quickstart-image:tag1
