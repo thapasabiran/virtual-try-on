@@ -41,7 +41,7 @@ jobs:
     - name: Push Docker Image to Artifact Registry
       env:
         GIT_TAG: v0.1.0
-      run:
+      run: |-
         docker tag $IMAGE_NAME:1.0 northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:tag1
         docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$IMAGE_NAME:tag1
 
