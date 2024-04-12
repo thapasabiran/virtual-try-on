@@ -8,8 +8,8 @@ jobs:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: virtual-tryon
-      PROJECT_ID: virtual-try-on-420019
+      IMAGE_NAME: vto-image
+      PROJECT_ID: virtual-try-on-420112
 
     permissions:
       contents: 'read'
@@ -28,8 +28,8 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v2
       with:
-        workload_identity_provider: 'projects/334629917966/locations/global/workloadIdentityPools/new-pool/providers/virtual-try-on-420019'
-        service_account: 'new-service@virtual-try-on-420019.iam.gserviceaccount.com'
+        workload_identity_provider: 'projects/177200455350/locations/global/workloadIdentityPools/vto-pool/providers/vto-github'
+        service_account: 'vto-github-action-service@virtual-try-on-420112.iam.gserviceaccount.com'
         access_token_lifetime: "360s"
 
     - name: 'Set up Cloud SDK'
