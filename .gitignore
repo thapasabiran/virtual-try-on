@@ -16,6 +16,7 @@ build/
 extra-folder
 
 .env
+.env.sample
 .DS_Store
 
 migrations
