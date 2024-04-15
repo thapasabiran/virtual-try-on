@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: vto-image
+      IMAGE_NAME: vto-docker-image
       PROJECT_ID: virtual-try-on-420112
       LOCATION: northamerica-northeast2-docker.pkg.dev
 
