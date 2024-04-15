@@ -13,8 +13,8 @@ RUN pip install poetry==1.8.2
 # Install dependencies using Poetry
 RUN poetry install
 
-# Expose port 8080
-EXPOSE 8080
+# Expose port 5000
+EXPOSE 5000
 
 # Set the entry point to your app.py
-ENTRYPOINT ["poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=8080"]
+ENTRYPOINT ["poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=5000"]
