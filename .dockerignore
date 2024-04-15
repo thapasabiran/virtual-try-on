@@ -9,8 +9,8 @@ __pycache__
 # Exclude local development files and directories
 venv
 .virtualenv
-.env
-*.env
+# .env
+# *.env
 
 # Exclude temporary files
 *.log
