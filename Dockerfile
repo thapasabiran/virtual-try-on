@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Copy the project files into the container
 COPY . .
-COPY .env .env
+# COPY .env .env
 
 # Install Poetry
 RUN pip install poetry==1.8.2
