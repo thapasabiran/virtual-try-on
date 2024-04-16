@@ -43,23 +43,3 @@ jobs:
         docker tag $IMAGE_NAME:latest $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
         docker push $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:latest
         docker push $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
-
-  # deploy-to-compute-engine:
-  #   name: Deploy to Compute Engine (using SSH)
-  #   runs-on: ubuntu-latest
-  #   needs: build-push-gcr
-
-  #   steps:
-  #   - name: Use SSH to deploy
-  #     uses: google-github-actions/ssh-compute@v1
-  #     with:
-  #       instance_name: vto-vm-instance
-  #       zone: northamerica-northeast2-a
-  #       user: your-ssh-username
-  #       private_key: ${{ secrets.VTO_SSH_KEY }}
-  #       command: |
-  #         gcloud docker --region=your-vm-region pull northamerica-northeast2-docker.pkg.dev/virtual-try-on-420112/vto-artifact/vto-image:latest
-  #         docker run -d -p 8080:8080 northamerica-northeast2-docker.pkg.dev/virtual-try-on-420112/vto-artifact/vto-image:latest
-
-
-  #         gcloud compute ssh --zone "northamerica-northeast2-a" "vto-vm-instance" --project "virtual-try-on-420112"
