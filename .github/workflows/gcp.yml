@@ -45,10 +45,13 @@ jobs:
         docker push $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:latest
         docker push $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
 
-    - name: Deploy to Cloud Run
+    - name: Deploy to Cloud Run (with specific image digest)
       run: |
         gcloud run deploy $CLOUD_RUN_SERVICE \
-          --image=$LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG \
-          --platform managed  # Adjust platform if needed (e.g., 'gke')
-          --region $LOCATION  # Adjust region if needed
-          --timeout 500s      # Adjust timeout if needed
+          --image=$LOCATION/$PROJECT_ID/vto-artifact/$CLOUD_RUN_SERVICE@sha256:f85e525d8384d78b80267ffa2d3bd2125fa7cab95fce4039f724b20ebc72eb46 \
+          --region=northamerica-northeast2 \
+          --project=$PROJECT_ID
+  
+    - name: Update Traffic to Latest Revision
+      run: |
+        gcloud run services update-traffic $CLOUD_RUN_SERVICE --to-latest
