@@ -47,10 +47,10 @@ jobs:
 
     - name: Deploy and Update Traffic
       run: |
-        gcloud run deploy vto-docker-image-latest \
-        --image=northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/vto-artifact/$CLOUD_RUN_SERVICE@sha256:f85e525d8384d78b80267ffa2d3bd2125fa7cab95fce4039f724b20ebc72eb46 \
+        gcloud run deploy $CLOUD_RUN_SERVICE \
+        --image=$LOCATION/$PROJECT_ID/vto-artifact/$CLOUD_RUN_SERVICE@sha256:f85e525d8384d78b80267ffa2d3bd2125fa7cab95fce4039f724b20ebc72eb46 \
         --region=northamerica-northeast2 \
-        --project=virtual-try-on-420112 \
+        --project=$PROJECT_ID \
         && gcloud run services update-traffic $CLOUD_RUN_SERVICE --to-latest --region=northamerica-northeast2
     
       
