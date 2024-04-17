@@ -16,6 +16,8 @@ RUN poetry install
 
 COPY . .
 
-# Set the entry point to your app.py
-ENTRYPOINT ["poetry", "run"]
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
+# # Set the entry point to your app.py
+# ENTRYPOINT ["poetry", "run"]
+# CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
+
+CMD ["poetry", "run", "python", "run.py", "--host=0.0.0.0", "--port=8080"]
