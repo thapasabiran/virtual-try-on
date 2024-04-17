@@ -12,6 +12,7 @@ jobs:
       IMAGE_NAME: vto-docker-image-latest
       PROJECT_ID: virtual-try-on-420112
       LOCATION: northamerica-northeast2-docker.pkg.dev
+      CLOUD_RUN_SERVICE: vto-docker-image-latest
 
     steps:
     - name: Checkout
@@ -43,3 +44,11 @@ jobs:
         docker tag $IMAGE_NAME:latest $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
         docker push $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:latest
         docker push $LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy $CLOUD_RUN_SERVICE \
+          --image=$LOCATION/$PROJECT_ID/vto-artifact/$IMAGE_NAME:$GIT_TAG \
+          --platform managed  # Adjust platform if needed (e.g., 'gke')
+          --region $LOCATION  # Adjust region if needed
+          --timeout 500s      # Adjust timeout if needed
