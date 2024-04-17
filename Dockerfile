@@ -5,12 +5,14 @@ WORKDIR /app
 
 # Copy the project files into the container
 COPY .env.sample .env.sample
+COPY poetry.lock pyproject.toml ./
 
 # Install Poetry
 RUN pip install poetry==1.8.2
 
 # Install dependencies using Poetry
 RUN poetry install
+
 
 COPY . .
 
