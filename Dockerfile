@@ -53,8 +53,8 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 # Copy the rest of the working directory contents into the container at /app
 COPY . .
 
-# Copy .env.sample if needed
-COPY .env.sample .env.sample
+# # Copy .env.sample if needed
+# COPY .env.sample .env.sample
 
 # Run run.py when the container launches
 ENTRYPOINT ["flask", "run", "--host=0.0.0.0", "--port=8080"]
